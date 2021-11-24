@@ -1,4 +1,4 @@
-# re&middot;i&middot;fy <sub>_verb, transitive_</sub> &nbsp; [![Build Status](https://github.com/benjamn/reify/actions/workflows/node.js.yml/badge.svg)](https://github.com/benjamn/reify/actions/workflows/node.js.yml)
+# re&middot;i&middot;fy <sub>_verb, transitive_</sub> &nbsp; [![Build Status](https://github.com/meteor/reify/actions/workflows/node.js.yml/badge.svg)](https://github.com/meteor/reify/actions/workflows/node.js.yml)
 
 **re&middot;i&middot;fied** <sub>past</sub> &nbsp; **re&middot;i&middot;fies** <sub>present</sub> &nbsp; **re&middot;i&middot;fy&middot;ing** <sub>participle</sub> &nbsp; **re&middot;i&middot;fi&middot;ca&middot;tion** <sub>noun</sub> &nbsp; **re&middot;i&middot;fi&middot;er** <sub>noun</sub>
 
@@ -10,17 +10,17 @@
 Usage
 ---
 
-  1. Run `npm install --save reify` in your package or app directory. The
+  1. Run `npm install --save @meteorjs/reify` in your package or app directory. The
      `--save` is important because reification only applies to modules in
-     packages that explicitly depend on the `reify` package.
-  2. Call `require("reify")` before importing modules that contain `import`
+     packages that explicitly depend on the `@meteorjs/reify` package.
+  2. Call `require("@meteorjs/reify")` before importing modules that contain `import`
      and `export` declarations.
 
-You can also easily `reify` the Node REPL:
+You can also easily `@meteorjs/reify` the Node REPL:
 
 ```sh
 % node
-> require("reify")
+> require("@meteorjs/reify")
 {}
 > import { strictEqual } from "assert"
 > strictEqual(2 + 2, 5)

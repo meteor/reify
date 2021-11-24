@@ -3,3 +3,4 @@
 test/.cache
 test/**/*.gz
 node_modules
+.idea
