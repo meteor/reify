@@ -23,7 +23,7 @@ const reifySemVer = require("./version.js");
 
 function getReifyRange(json, name) {
   const entry = json[name];
-  return utils.isObject(entry) && hasOwn.call(entry, "reify")
+  return utils.isObject(entry) && hasOwn.call(entry, "@meteorjs/reify")
     ? SemVer.validRange(entry.reify)
     : null;
 }

@@ -5,6 +5,6 @@
     "cache-directory": ".cache/path/for/tests"
   },
   "dependencies": {
-    "reify": "*"
+    "@meteorjs/reify": "*"
   }
 }
