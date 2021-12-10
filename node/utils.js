@@ -107,7 +107,11 @@ function maxSatisfying(versions, range) {
   if (cacheKey in maxSatisfyingCache) {
     return maxSatisfyingCache[cacheKey];
   }
-  return maxSatisfyingCache[cacheKey] = SemVer.maxSatisfying(versions, range);
+  return maxSatisfyingCache[cacheKey] = SemVer.maxSatisfying(
+    versions,
+    range,
+    { includePrerelease: range === '*' }
+  );
 }
 
 exports.maxSatisfying = maxSatisfying;
