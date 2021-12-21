@@ -11,6 +11,8 @@ const FastObject = require("../lib/fast-object.js");
 const PkgInfo = require("./pkg-info.js");
 const SemVer = require("semver");
 
+const REIFY_PACKAGE_NAME = '@meteorjs/reify';
+
 const DEFAULT_PKG_CONFIG = {
   "cache-directory": ".reify-cache",
   parser: void 0,
@@ -23,8 +25,8 @@ const reifySemVer = require("./version.js");
 
 function getReifyRange(json, name) {
   const entry = json[name];
-  return utils.isObject(entry) && hasOwn.call(entry, "reify")
-    ? SemVer.validRange(entry.reify)
+  return utils.isObject(entry) && hasOwn.call(entry, REIFY_PACKAGE_NAME)
+    ? SemVer.validRange(entry[REIFY_PACKAGE_NAME])
     : null;
 }
 
@@ -105,7 +107,11 @@ function maxSatisfying(versions, range) {
   if (cacheKey in maxSatisfyingCache) {
     return maxSatisfyingCache[cacheKey];
   }
-  return maxSatisfyingCache[cacheKey] = SemVer.maxSatisfying(versions, range);
+  return maxSatisfyingCache[cacheKey] = SemVer.maxSatisfying(
+    versions,
+    range,
+    { includePrerelease: range === '*' }
+  );
 }
 
 exports.maxSatisfying = maxSatisfying;
@@ -118,7 +124,7 @@ function readPkgInfo(dirPath) {
     return null;
   }
 
-  const reify = pkgJSON.reify;
+  const reify = pkgJSON[REIFY_PACKAGE_NAME];
 
   if (reify === false) {
     // An explicit "reify": false property in package.json disables

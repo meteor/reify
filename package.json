@@ -1,13 +1,13 @@
 {
-  "name": "reify",
-  "version": "0.22.2",
+  "name": "@meteorjs/reify",
+  "version": "0.23.0-beta.1",
   "main": "node/index.js",
   "browser": "lib/empty.js",
   "author": "Ben Newman <ben@benjamn.com>",
   "description": "Enable ECMAScript 2015 modules in Node today. No caveats. Full stop.",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/benjamn/reify.git"
+    "url": "git+https://github.com/meteor/reify.git"
   },
   "keywords": [
     "ecmascript",
@@ -20,9 +20,9 @@
     "node"
   ],
   "license": "MIT",
-  "homepage": "https://github.com/benjamn/reify#readme",
+  "homepage": "https://github.com/meteor/reify#readme",
   "bugs": {
-    "url": "https://github.com/benjamn/reify/issues"
+    "url": "https://github.com/meteor/reify/issues"
   },
   "engines": {
     "node": ">=4"
@@ -34,7 +34,8 @@
     "acorn": "^6.1.1",
     "acorn-dynamic-import": "^4.0.0",
     "magic-string": "^0.25.3",
-    "semver": "^5.4.1"
+    "periscopic": "^2.0.3",
+    "semver": "^5.7.1"
   },
   "devDependencies": {
     "@babel/core": "7.15.0",

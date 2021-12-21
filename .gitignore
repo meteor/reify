@@ -2,4 +2,6 @@
 *.log
 test/.cache
 test/**/*.gz
-node_modules
+/node_modules
+.reify-cache
+.idea
