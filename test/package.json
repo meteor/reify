@@ -1,10 +1,10 @@
 {
   "name": "reify-test-package",
   "private": true,
-  "reify": {
+  "@meteorjs/reify": {
     "cache-directory": ".cache/path/for/tests"
   },
   "dependencies": {
-    "reify": "*"
+    "@meteorjs/reify": "*"
   }
 }
