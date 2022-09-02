@@ -9,7 +9,10 @@ module.parent = void 0;
 
 delete require.cache[require.resolve("../node/repl-hook.js")];
 
-describe("Node REPL", () => {
+let TLA_ENABLED = process.env.REIFY_TLA === 'true';
+
+// TLA is not compatible with global exports
+(TLA_ENABLED ? describe.skip : describe)("Node REPL", () => {
   import "../node/repl-hook.js";
   import { createContext } from "vm";
   import { enable } from "../lib/runtime";
