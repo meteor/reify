@@ -96,8 +96,12 @@ module.exports = function (context) {
               compiler.makeUniqueId("module", code);
           }
           transformOptions.finalCompilationPass = false;
+          transformOptions.forceWrapForTopLevelAwait = false
           Object.assign(transformOptions, this.opts);
-          transform(path.node);
+          let visitor = transform(path.node).visitor;
+
+          transformOptions.forceWrapForTopLevelAwait =
+            visitor.wrapForTopLevelAwait;
         },
 
         exit(path) {
