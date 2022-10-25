@@ -1,4 +1,6 @@
-let tlaDescription = process.env.REIFY_TLA === 'true' ?
+import { topLevelAwaitEnabled } from './test-options.js';
+
+let tlaDescription = topLevelAwaitEnabled ?
   ' - with top level await' : '';
 
 describe("Parsing with " + JSON.stringify(

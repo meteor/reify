@@ -31,16 +31,15 @@
     "test": "test/run.sh"
   },
   "dependencies": {
-    "acorn": "^8.8.0",
+    "acorn": "^8.8.1",
     "acorn-dynamic-import": "^4.0.0",
     "magic-string": "^0.25.3",
     "semver": "^5.4.1"
   },
   "devDependencies": {
-    "@babel/core": "7.16.0",
-    "@babel/parser": "7.16.4",
-    "@babel/plugin-syntax-top-level-await": "^7.14.5",
-    "@babel/plugin-transform-runtime": "7.15.0",
+    "@babel/core": "^7.19.6",
+    "@babel/parser": "^7.19.6",
+    "@babel/plugin-transform-runtime": "^7.19.6",
     "@babel/preset-env": "^7.19.4",
     "lodash": "4.17.21",
     "mocha": "9.1.1",

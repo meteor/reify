@@ -7,6 +7,7 @@ import reifyPlugin from "../plugins/babel.js";
 import envPreset from "@babel/preset-env";
 import runtimeTransform from "@babel/plugin-transform-runtime";
 import Visitor from "../lib/visitor.js";
+import { topLevelAwaitEnabled } from './test-options.js';
 
 const filesToTest = Object.create(null);
 const methodNameRegExp =
@@ -25,6 +26,10 @@ Object.keys(files).forEach((absPath) => {
       relPath === "import-tests.js" ||
       relPath === "setter-tests.js" ||
       relPath.startsWith("output/export-multi-namespace/")) {
+    return;
+  }
+
+  if (!topLevelAwaitEnabled && relPath.startsWith('tla/')) {
     return;
   }
 
