@@ -24,7 +24,7 @@
     "node": ">=4"
   },
   "dependencies": {
-    "reify": "^0.5.1"
+    "@meteorjs/reify": "0.23.0-beta.0"
   },
   "reify": {
     "cache-directory": ".reify-custom-cache"
