@@ -1,6 +1,8 @@
 import { topLevelAwaitEnabled } from './test-options';
 const assert = require('assert');
 const reify = require('../lib/runtime/index');
+import { importSync, importAsync, importAsyncEvaluated } from './tla/nested/parent.js';
+
 
 (topLevelAwaitEnabled ? describe : describe.skip) ('top level await', () => {
   
@@ -38,7 +40,33 @@ const reify = require('../lib/runtime/index');
     })
   });
 
-  it.only('should allow configuring modules to require as sync', async () => {
+  describe('nested imports', () => {
+    it('should support async imports', () => {
+      const result = importSync();
+      assert.strictEqual(result.a, 3);
+    });
+    it('should throw for async module', () => {
+      let err;
+      try {
+        importAsync();
+      } catch (e) {
+        err = e;
+      }
+      assert.strictEqual(err.message, 'Nested imports can not import an async module');
+    });
+    it('should throw for evaluated async module', () => {
+      let err;
+      try {
+        let result = importAsyncEvaluated();
+        console.log(result);
+      } catch (e) {
+        err = e;
+      }
+      assert.strictEqual(err.message, 'Nested imports can not import an async module');
+    });
+  });
+
+  it('should allow configuring modules to require as sync', async () => {
     const exportsPromise = require('./tla/require-as-sync');
     const exports1 = await exportsPromise;
     debugger;
