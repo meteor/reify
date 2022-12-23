@@ -1,5 +1,6 @@
 import { topLevelAwaitEnabled } from './test-options';
 const assert = require('assert');
+const reify = require('../lib/runtime/index');
 
 (topLevelAwaitEnabled ? describe : describe.skip) ('top level await', () => {
   
@@ -37,11 +38,11 @@ const assert = require('assert');
     })
   });
 
-  it('should allow configuring modules to require as sync', async () => {
+  it.only('should allow configuring modules to require as sync', async () => {
     const exportsPromise = require('./tla/require-as-sync');
     const exports1 = await exportsPromise;
     debugger;
-    module.require._reifyRequireAsSync(require.resolve('./tla/require-as-sync'));
+    reify._reifyRequireAsSync(require.resolve('./tla/require-as-sync'));
     const exports2 = require('./tla/require-as-sync');
 
     assert(exportsPromise instanceof Promise);
