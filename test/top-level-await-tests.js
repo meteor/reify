@@ -42,7 +42,7 @@ const reify = require('../lib/runtime/index');
     const exportsPromise = require('./tla/require-as-sync');
     const exports1 = await exportsPromise;
     debugger;
-    reify._reifyRequireAsSync(require.resolve('./tla/require-as-sync'));
+    reify._requireAsSync(require.resolve('./tla/require-as-sync'));
     const exports2 = require('./tla/require-as-sync');
 
     assert(exportsPromise instanceof Promise);
