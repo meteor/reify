@@ -31,7 +31,20 @@ const assert = require('assert');
     });
     it('should handle module being imported after initially evaluated', async () => {
       const exports = await require('./tla/already-evaluated/async-module.js');
-      const exports2 = await require('./tla/already-evaluated/parent.js')
+      const exports2 = await require('./tla/already-evaluated/parent.js');
+
+      assert(exports.a === exports2.default.a);
     })
+  });
+
+  it('should allow configuring modules to require as sync', async () => {
+    const exportsPromise = require('./tla/require-as-sync');
+    const exports1 = await exportsPromise;
+    debugger;
+    module.require._reifyRequireAsSync(require.resolve('./tla/require-as-sync'));
+    const exports2 = require('./tla/require-as-sync');
+
+    assert(exportsPromise instanceof Promise);
+    assert(exports1 === exports2);
   });
 });
