@@ -2,13 +2,13 @@ import { topLevelAwaitEnabled } from './test-options';
 const assert = require('assert');
 
 (topLevelAwaitEnabled ? describe : describe.skip) ('top level await', () => {
-  let logs = [];
-  beforeEach(() => {
-    logs = [];
-    global.tlaTrace = (t) => logs.push(t);
-  });
-
+  
   describe('evaluation order', () => {
+    let logs = [];
+    beforeEach(() => {
+      logs = [];
+      global.tlaTrace = (t) => logs.push(t);
+    });
     it('test 1', async () => {
       await require('./tla/order-1/9.js');
       assert.deepStrictEqual(logs, [
@@ -21,4 +21,11 @@ const assert = require('assert');
       ]);
     });
   });
+
+  it('should handle module being required after initially evaluated', async () => {
+    const exports1 = await require('./tla/async-module.js');
+    const exports2 = await require('./tla/async-module.js');
+
+    assert.strictEqual(exports1, exports2);
+  })
 });
