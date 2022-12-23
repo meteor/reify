@@ -102,6 +102,7 @@ module.exports = function (context) {
 
           transformOptions.forceWrapForTopLevelAwait =
             visitor.wrapForTopLevelAwait;
+          transformOptions.forceHasTopLevelAwait = visitor.hasTopLevelAwait
         },
 
         exit(path) {
