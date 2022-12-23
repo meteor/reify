@@ -22,10 +22,16 @@ const assert = require('assert');
     });
   });
 
-  it('should handle module being required after initially evaluated', async () => {
-    const exports1 = await require('./tla/async-module.js');
-    const exports2 = await require('./tla/async-module.js');
-
-    assert.strictEqual(exports1, exports2);
-  })
+  describe('already evaluated', () => {
+    it('should handle module being required after initially evaluated', async () => {
+      const exports1 = await require('./tla/already-evaluated/async-module.js');
+      const exports2 = await require('./tla/already-evaluated/async-module.js');
+  
+      assert.strictEqual(exports1, exports2);
+    });
+    it('should handle module being imported after initially evaluated', async () => {
+      const exports = await require('./tla/already-evaluated/async-module.js');
+      const exports2 = await require('./tla/already-evaluated/parent.js')
+    })
+  });
 });
