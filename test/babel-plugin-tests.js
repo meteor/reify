@@ -11,7 +11,7 @@ import { topLevelAwaitEnabled } from './test-options.js';
 
 const filesToTest = Object.create(null);
 const methodNameRegExp =
-  /\bmodule\d*(?:\.link\b|\.export(?:Default)?\b|\["export"\])/;
+  /\bmodule\d*(?:\.link\b|\.dynamicImport\b|\.export(?:Default)?\b|\["export"\])/;
 
 Object.keys(files).forEach((absPath) => {
   const code = files[absPath];
@@ -113,14 +113,16 @@ describe("reify/plugins/babel", () => {
 
     const pluginsReifyFirst = [
       [reifyPlugin, {
-        generateLetDeclarations: true
+        generateLetDeclarations: true,
+        dynamicImport: true
       }],
       runtimeTransform,
     ];
 
     const pluginsReifyLast = [
       [reifyPlugin, {
-        generateLetDeclarations: true
+        generateLetDeclarations: true,
+        dynamicImport: true
       }],
       runtimeTransform,
     ];

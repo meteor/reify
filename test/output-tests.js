@@ -29,7 +29,8 @@ describe("output", () => {
   function check(data, key) {
     const code = compile(data.actual, {
       parse: require("../lib/parsers/acorn.js").parse,
-      topLevelAwait: key.startsWith('tla-')
+      topLevelAwait: key.startsWith('tla-'),
+      dynamicImport: true
     }).code;
 
     // Consolidate semicolons, then trim blank lines and trailing whitespace.

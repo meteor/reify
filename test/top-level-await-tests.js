@@ -69,7 +69,7 @@ import { importSync, importAsync, importAsyncEvaluated } from './tla/nested/pare
   it('should allow configuring modules to require as sync', async () => {
     const exportsPromise = require('./tla/require-as-sync');
     const exports1 = await exportsPromise;
-    debugger;
+
     reify._requireAsSync(require.resolve('./tla/require-as-sync'));
     const exports2 = require('./tla/require-as-sync');
 
