@@ -91,6 +91,21 @@ describe("reify/plugins/babel", () => {
     ]);
   });
 
+  it('compiles dynamic imports', () => {
+    const code = 'import (x)';
+    const ast = parse(code);
+    delete ast.tokens;
+    const result = transformFromAst(ast, code, {
+      plugins: [[reifyPlugin, {
+        dynamicImport: true
+      }]]
+    });
+    assert.strictEqual(
+      result.code,
+      '"use strict";\n\nmodule.dynamicImport(x);'
+    );
+  });
+
   function check(code, options) {
     const ast = parse(code);
     delete ast.tokens;
