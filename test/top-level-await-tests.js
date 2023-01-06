@@ -76,4 +76,9 @@ import { importSync, importAsync, importAsyncEvaluated } from './tla/nested/pare
     assert(exportsPromise instanceof Promise);
     assert(exports1 === exports2);
   });
+
+  it('should set __reifyAsyncModule on promise returned by require', async () => {
+    const exportsPromise = require('./tla/async-module.js');
+    assert(exportsPromise.__reifyAsyncModule, true);
+  });
 });
