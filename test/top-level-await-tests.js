@@ -40,7 +40,7 @@ import { importSync, importAsync, importAsyncEvaluated } from './tla/nested/pare
     })
   });
 
-  describe.skip('nested imports', () => {
+  describe('nested imports', () => {
     it('should support async imports', () => {
       const result = importSync();
       assert.strictEqual(result.a, 3);
@@ -54,15 +54,9 @@ import { importSync, importAsync, importAsyncEvaluated } from './tla/nested/pare
       }
       assert.strictEqual(err.message, 'Nested imports can not import an async module');
     });
-    it('should throw for evaluated async module', () => {
-      let err;
-      try {
-        let result = importAsyncEvaluated();
-        console.log(result);
-      } catch (e) {
-        err = e;
-      }
-      assert.strictEqual(err.message, 'Nested imports can not import an async module');
+    it('should allow nested import for evaluated async module', () => {
+      // Will throw if test fails
+      importAsyncEvaluated();
     });
   });
 
