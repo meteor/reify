@@ -75,4 +75,17 @@ import { importSync, importAsync, importAsyncEvaluated } from './tla/nested/pare
     const exportsPromise = require('./tla/async-module.js');
     assert(exportsPromise.__reifyAsyncModule, true);
   });
+
+  describe('errors', () => {
+    it('should synchronously throw error for sync module', () => {
+      try {
+        require('./tla/sync-error/sync.js');
+
+        // shouldn't be reached
+        assert(false);
+      } catch (e) {
+        assert.equal(e.message, 'sync-error');
+      }
+    });
+  });
 });
