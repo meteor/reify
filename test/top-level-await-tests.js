@@ -87,5 +87,59 @@ import { importSync, importAsync, importAsyncEvaluated } from './tla/nested/pare
         assert.equal(e.message, 'sync-error');
       }
     });
+    it('should reject promise returned by require', async () => {
+      try {
+        const promise = await require('./tla/async-error/require-child.js');
+
+        // shouldn't be reached
+        assert(false);
+      } catch (e) {
+        assert.equal(e.message, 'async-error');
+      }
+
+      // Try a second time to ensure it works for already evaluated modules
+      try {
+        const promise = await require('./tla/async-error/require-child.js');
+
+        // shouldn't be reached
+        assert(false);
+      } catch (e) {
+        assert.equal(e.message, 'async-error');
+      }
+    });
+
+    it('should reject when imported async module errors', async () => {
+      try {
+        const promise = await require('./tla/async-error/parent-with-async-child.js');
+
+        // shouldn't be reached
+        assert(false);
+      } catch (e) {
+        assert.equal(e.message, 'async-child-error');
+      }
+    });
+
+    it('should reject when imported sync module errors', async () => {
+      try {
+        const promise = await require('./tla/async-error/parent-with-sync-child.js');
+
+        // shouldn't be reached
+        assert(false);
+      } catch (e) {
+        assert.equal(e.message, 'sync-child-error');
+      }
+    });
+
+    it.skip('should reject when parent imports async errored child without TLA', async () => {
+      debugger;
+      try {
+        const promise = await require('./tla/async-error/parent-with-async-child-without-tla.js');
+
+        // shouldn't be reached
+        assert(false);
+      } catch (e) {
+        assert.equal(e.message, 'sync-child-error');
+      }
+    });
   });
 });
