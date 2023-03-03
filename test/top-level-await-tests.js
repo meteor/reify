@@ -3,7 +3,6 @@ const assert = require('assert');
 const reify = require('../lib/runtime/index');
 import { importSync, importAsync, importAsyncEvaluated } from './tla/nested/parent.js';
 
-
 (topLevelAwaitEnabled ? describe : describe.skip) ('top level await', () => {
   
   describe('evaluation order', () => {
@@ -130,15 +129,34 @@ import { importSync, importAsync, importAsyncEvaluated } from './tla/nested/pare
       }
     });
 
-    it.skip('should reject when parent imports async errored child without TLA', async () => {
-      debugger;
+    it('should reject when parent imports async errored child without TLA', async () => {
       try {
         const promise = await require('./tla/async-error/parent-with-async-child-without-tla.js');
 
         // shouldn't be reached
         assert(false);
       } catch (e) {
-        assert.equal(e.message, 'sync-child-error');
+        assert.equal(e.message, 'mostly-sync-child-error');
+      }
+    });
+    it('should propagate error for already errored child', async () => {
+      try {
+        const promise = await require('./tla/async-error/already-errored.js');
+
+        // shouldn't be reached
+        assert(false);
+      } catch (e) {
+        assert.equal(e.message, 'already-errored');
+      }
+
+      try {
+        debugger;
+        const promise = await require('./tla/async-error/import-already-errored.js');
+
+        // shouldn't be reached
+        assert(false);
+      } catch (e) {
+        assert.equal(e.message, 'already-errored');
       }
     });
   });

@@ -1,5 +1,6 @@
 import assert from "assert";
 import { compile } from "../lib/compiler.js";
+import { topLevelAwaitEnabled } from './test-options.js';
 
 function isUseStrictExprStmt(stmt) {
   return stmt.type === "ExpressionStatement" &&
@@ -10,11 +11,18 @@ function removeWrapper(compiled) {
   if (compiled.startsWith('!module.wrapAsync')) {
     let firstNeedle = '__reify_async_result__) {';
     let endNeedle = '//*/\n} catch (_reifyError) {';
+    let tryNeedle = ' try {';
 
-    return compiled.substring(
+    let part1 = compiled.substring(
       compiled.indexOf(firstNeedle) + firstNeedle.length,
+      compiled.indexOf(tryNeedle)
+    );
+    let part2 = compiled.substring(
+      compiled.indexOf(tryNeedle) + tryNeedle.length,
       compiled.indexOf(endNeedle)
     );
+    
+    return part1 + part2;
   }
 
   return compiled;
@@ -114,7 +122,13 @@ describe("compiler", () => {
       enforceStrictMode: false
     }).code;
 
-    assert.ok(! removeWrapper(withoutStrict).startsWith('"use strict"'));
+    if (topLevelAwaitEnabled) {
+      // top level await always enables use strict
+      // TODO: check if this is necessary
+      assert.ok(removeWrapper(withoutStrict).startsWith('"use strict"'));
+    } else {
+      assert.ok(! removeWrapper(withoutStrict).startsWith('"use strict"'));
+    }
 
     const withStrict = compile(source, {
       enforceStrictMode: true
