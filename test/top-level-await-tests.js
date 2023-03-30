@@ -150,7 +150,6 @@ import { importSync, importAsync, importAsyncEvaluated } from './tla/nested/pare
       }
 
       try {
-        debugger;
         const promise = await require('./tla/async-error/import-already-errored.js');
 
         // shouldn't be reached
@@ -161,3 +160,5 @@ import { importSync, importAsync, importAsyncEvaluated } from './tla/nested/pare
     });
   });
 });
+
+global.topLevelAwaitTestsLoaded = true;

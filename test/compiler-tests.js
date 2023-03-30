@@ -9,8 +9,8 @@ function isUseStrictExprStmt(stmt) {
 
 function removeWrapper(compiled) {
   if (compiled.startsWith('!module.wrapAsync')) {
-    let firstNeedle = '__reify_async_result__) {';
-    let endNeedle = '//*/\n} catch (_reifyError) {';
+    let firstNeedle = '__reifyAsyncResult__) {';
+    let endNeedle = '//*/\n__reifyAsyncResult__();} catch (_reifyError) {';
     let tryNeedle = ' try {';
 
     let part1 = compiled.substring(
