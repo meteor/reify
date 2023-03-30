@@ -75,6 +75,11 @@ import { importSync, importAsync, importAsyncEvaluated } from './tla/nested/pare
     assert(exportsPromise.__reifyAsyncModule, true);
   });
 
+  it('should run setters after module finished', async () => {
+    const exports = await require('./tla/export-after-await.js');
+    assert(exports.value === 5);
+  });
+
   describe('errors', () => {
     it('should synchronously throw error for sync module', () => {
       try {
