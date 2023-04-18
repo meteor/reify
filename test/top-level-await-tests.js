@@ -80,6 +80,11 @@ import { importSync, importAsync, importAsyncEvaluated } from './tla/nested/pare
     assert(exports.value === 5);
   });
 
+  it('should run setters after module with async dep finished', async () => {
+    const exports = await require('./tla/export-sync-parent.js');
+    assert(exports.a === 1);
+  });
+
   describe('errors', () => {
     it('should synchronously throw error for sync module', () => {
       try {
