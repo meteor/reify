@@ -1,4 +1,4 @@
-!module.wrapAsync(async function (module, __reifyWaitForDeps__, __reifyAsyncResult__) {"use strict"; try {if (__reifyWaitForDeps__()) (await __reifyWaitForDeps__())();module.dynamicImport('./test.js');
+!module.wrapAsync(async function (module, __reifyWaitForDeps__, __reifyAsyncResult__) {"use strict"; try {__reifyWaitForDeps__();module.dynamicImport('./test.js');
 
 await (() => {
   return module.dynamicImport('meteor/local:async-lazy')
