@@ -370,21 +370,26 @@ experimentation.
 
 ## Top Level Await
 
-To enable top level await, enable the `topLevelAwait` option when compiling files with reify (it is currently disabled by default). This wraps modules in a `module.wrapAsync` function that handles running the modules and its deps in a spec-compliant way:
+To enable top level await, set the `topLevelAwait` option to `true` when compiling files with reify (it is currently disabled by default). This wraps modules in a `module.wrapAsync` function that handles running the modules and its deps in a spec-compliant way:
 
 ```js
-!module.wrapAsync(async function (module, __reifyWaitForDeps__, __reify_async_result__) {
-  let utils;
-  module.link("./utils", {
-    "*"(ns) { utils = ns; }
-  });
-
-  if (__reifyWaitForDeps__()) await __reifyWaitForDeps__();
-
-  const language = utils.currentLanguage();
-  const message = await import(`./message/${language}.js`); 
-
-  __reify_async_result__();
+!module.wrapAsync(async function (module, __reifyWaitForDeps__, __reifyAsyncResult__) {
+    "use strict";
+    try {
+      let utils;
+      module.link("./utils", {
+        "*"(ns) { utils = ns; }
+      });
+  
+      if (__reifyWaitForDeps__()) (await __reifyWaitForDeps__())();
+  
+      const language = utils.currentLanguage();
+      const message = await import(`./message/${language}.js`); 
+  
+      __reifyAsyncResult__();
+    } catch (_reifyError) {
+      __reifyAsyncResult__(_reifyError);
+    }
   },
   { self: this, async: true }
 );
