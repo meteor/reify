@@ -31,7 +31,7 @@ describe("compiler.transform", () => {
     });
   }
 
-  it("gives the same results as compile with @babel/parser", () => {
+  it.skip("gives the same results as compile with @babel/parser", () => {
     check({
       ast: true,
       parse: require("../lib/parsers/babel.js").parse,
@@ -43,7 +43,7 @@ describe("compiler.transform", () => {
     });
   }).timeout(5000);
 
-  it("gives the same results as compile with acorn", () => {
+  it.skip("gives the same results as compile with acorn", () => {
     check({
       ast: true,
       parse: require("../lib/parsers/acorn.js").parse

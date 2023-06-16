@@ -7,10 +7,11 @@ import reifyPlugin from "../plugins/babel.js";
 import envPreset from "@babel/preset-env";
 import runtimeTransform from "@babel/plugin-transform-runtime";
 import Visitor from "../lib/visitor.js";
+import { topLevelAwaitEnabled } from './test-options.js';
 
 const filesToTest = Object.create(null);
 const methodNameRegExp =
-  /\bmodule\d*(?:\.link\b|\.export(?:Default)?\b|\["export"\])/;
+  /\bmodule\d*(?:\.link\b|\.dynamicImport\b|\.export(?:Default)?\b|\["export"\])/;
 
 Object.keys(files).forEach((absPath) => {
   const code = files[absPath];
@@ -25,6 +26,10 @@ Object.keys(files).forEach((absPath) => {
       relPath === "import-tests.js" ||
       relPath === "setter-tests.js" ||
       relPath.startsWith("output/export-multi-namespace/")) {
+    return;
+  }
+
+  if (!topLevelAwaitEnabled && relPath.startsWith('tla/')) {
     return;
   }
 
@@ -86,6 +91,21 @@ describe("reify/plugins/babel", () => {
     ]);
   });
 
+  it('compiles dynamic imports', () => {
+    const code = 'import (x)';
+    const ast = parse(code);
+    delete ast.tokens;
+    const result = transformFromAst(ast, code, {
+      plugins: [[reifyPlugin, {
+        dynamicImport: true
+      }]]
+    });
+    assert.strictEqual(
+      result.code,
+      '"use strict";\n\nmodule.dynamicImport(x);'
+    );
+  });
+
   function check(code, options) {
     const ast = parse(code);
     delete ast.tokens;
@@ -108,14 +128,16 @@ describe("reify/plugins/babel", () => {
 
     const pluginsReifyFirst = [
       [reifyPlugin, {
-        generateLetDeclarations: true
+        generateLetDeclarations: true,
+        dynamicImport: true
       }],
       runtimeTransform,
     ];
 
     const pluginsReifyLast = [
       [reifyPlugin, {
-        generateLetDeclarations: true
+        generateLetDeclarations: true,
+        dynamicImport: true
       }],
       runtimeTransform,
     ];

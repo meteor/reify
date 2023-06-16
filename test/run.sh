@@ -12,23 +12,22 @@ export NODE_OPTIONS="--trace-warnings"
 
 cd "$TEST_DIR"
 
-rm -rf .cache
-export REIFY_PARSER=babel
+parsers=("babel" "acorn")
+tlaModes=('false' 'true')
 
-mocha \
-    --require "../node" \
-    --reporter spec \
-    --full-trace \
-    run.js
+for parser in ${parsers[@]}; do
+    for tla in ${tlaModes[@]}; do
+        rm -rf .cache
+        export REIFY_PARSER="$parser"
+        export REIFY_TLA="$tla"
 
-rm -rf .cache
-export REIFY_PARSER=acorn
-
-mocha \
-    --require "../node" \
-    --reporter spec \
-    --full-trace \
-    run.js
+        mocha \
+            --require "../node" \
+            --reporter spec \
+            --full-trace \
+            run.js
+    done
+done
 
 # Run tests again using test/.cache.
 mocha \

@@ -1,4 +1,6 @@
 const assert = require("assert");
+import { topLevelAwaitEnabled } from './test-options';
+
 const nodeMajorVersion = parseInt(process.versions.node, 10);
 
 // Masquerade as the REPL module.
@@ -9,7 +11,9 @@ module.parent = void 0;
 
 delete require.cache[require.resolve("../node/repl-hook.js")];
 
-describe("Node REPL", () => {
+
+// TLA is not compatible with global exports
+(topLevelAwaitEnabled ? describe.skip : describe)("Node REPL", () => {
   import "../node/repl-hook.js";
   import { createContext } from "vm";
   import { enable } from "../lib/runtime";

@@ -26,9 +26,11 @@ Object.keys(files).forEach((absPath) => {
 });
 
 describe("output", () => {
-  function check(data) {
+  function check(data, key) {
     const code = compile(data.actual, {
-      parse: require("../lib/parsers/acorn.js").parse
+      parse: require("../lib/parsers/acorn.js").parse,
+      topLevelAwait: key.startsWith('tla-'),
+      dynamicImport: true
     }).code;
 
     // Consolidate semicolons, then trim blank lines and trailing whitespace.
@@ -43,7 +45,7 @@ describe("output", () => {
     const testName = key.split("-").join(" ");
 
     it("compiles " + testName + " example as expected", () => {
-      check(data);
+      check(data, key);
     });
   });
 });

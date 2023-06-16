@@ -6,6 +6,8 @@ import "./compiler-tests.js";
 import "./output-tests.js";
 import "./file-extension-tests.js";
 import "./transform-tests.js";
+import "./top-level-await-tests.js";
 import "./babel-plugin-tests.js";
+import "./babel-plugin-tests";
 import "./repl-tests.js";
 import "./hoisting-tests.js";

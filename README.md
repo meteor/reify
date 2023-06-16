@@ -367,3 +367,37 @@ imagine how any declaration could be compiled.
 When I have some time, I hope to implement a [live-compiling text
 editor](https://github.com/benjamn/reify/issues/15) to enable
 experimentation.
+
+## Top Level Await
+
+To enable top level await, set the `topLevelAwait` option to `true` when compiling files with reify (it is currently disabled by default). This wraps modules in a `module.wrapAsync` function that handles running the modules and its deps in a spec-compliant way:
+
+```js
+!module.wrapAsync(async function (module, __reifyWaitForDeps__, __reifyAsyncResult__) {
+    "use strict";
+    try {
+      let utils;
+      module.link("./utils", {
+        "*"(ns) { utils = ns; }
+      });
+  
+      if (__reifyWaitForDeps__()) (await __reifyWaitForDeps__())();
+  
+      const language = utils.currentLanguage();
+      const message = await import(`./message/${language}.js`); 
+  
+      __reifyAsyncResult__();
+    } catch (_reifyError) {
+      __reifyAsyncResult__(_reifyError);
+    }
+  },
+  { self: this, async: true }
+);
+```
+
+This is more complicated than other parts of the runtime, but can be broken down into 3 parts:
+1. At the top of the function passed to wrapAsync, it links any dependencies
+2. If any of the dependencies are async, it waits for them to be fully evaluated
+3. Afterwards, it runs the module code
+
+If you `require` an async module, `require` will return a promise that resolves to the module's exports, instead of directly returning the exports. This will only work for `require` in modules that reify was enabled for.
