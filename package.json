@@ -1,6 +1,6 @@
 {
   "name": "@meteorjs/reify",
-  "version": "0.25.0",
+  "version": "0.25.1",
   "main": "node/index.js",
   "browser": "lib/empty.js",
   "author": "Ben Newman <ben@benjamn.com>",
@@ -34,7 +34,7 @@
     "acorn": "^8.8.1",
     "magic-string": "^0.25.3",
     "periscopic": "^2.0.3",
-    "semver": "^5.7.1"
+    "semver": "^7.5.4"
   },
   "devDependencies": {
     "@babel/core": "^7.19.6",
