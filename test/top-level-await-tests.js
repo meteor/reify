@@ -80,10 +80,14 @@ import { importSync, importAsync, importAsyncEvaluated } from './tla/nested/pare
     assert(exports.value === 5);
   });
 
-  it('should await variable initializers', async () => {
-    const exports = await require('./tla/export-awaited-init.js');
-    assert(exports.value1 === 8);
-    assert(exports.value2 === 8);
+  it('should await shallow variable initializers', async () => {
+    const exports = await require('./tla/export-awaited-init-shallow.js');
+    assert(exports.value === 8);
+  });
+
+  it('should await deep variable initializers', async () => {
+    const exports = await require('./tla/export-awaited-init-deep.js');
+    assert(exports.value === 12);
   });
 
   it('should run setters after module with async dep finished', async () => {
