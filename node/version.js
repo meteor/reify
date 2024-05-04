@@ -5,6 +5,6 @@ const path = require("path");
 const pkgPath = path.join(__dirname, "../package.json");
 const SemVer = require("semver");
 
-module.exports = new SemVer(
+module.exports = SemVer.parse(
   process.env.REIFY_VERSION || fs.readJSON(pkgPath).version
 );
