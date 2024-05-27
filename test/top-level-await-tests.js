@@ -85,14 +85,19 @@ import { importSync, importAsync, importAsyncEvaluated } from './tla/nested/pare
     assert(exports.a === 1);
   });
 
-  it('should detect exported declarations', async () => {
+  it('should detect tla on exported declarations', async () => {
     const exports = await require('./tla/exported-declaration.js');
     assert(exports.test === 'value');
   })
 
-  it('should detect non exported declarations', async () => {
+  it('should detect tla on non exported declarations', async () => {
     const exports = await require('./tla/non-exported-declaration.js');
     assert(exports.redirected === 'value');
+  })
+
+  it('should not detect tla if they are inside any function type', async () => {
+    const exports = require('./tla/await-inside-function.js');
+    assert(!(exports instanceof Promise))
   })
 
   describe('errors', () => {
