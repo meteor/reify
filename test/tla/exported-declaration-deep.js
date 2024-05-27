@@ -1,0 +1,1 @@
+export const value = Math.max(false ? 777 : await Promise.resolve(12), 2);

@@ -95,6 +95,11 @@ import { importSync, importAsync, importAsyncEvaluated } from './tla/nested/pare
     assert(exports.redirected === 'value');
   })
 
+  it('should detect tla on exported declarations (deep)', async () => {
+    const exports = await require('./tla/exported-declaration-deep.js');
+    assert(exports.value === 12);
+  });
+
   it('should not detect tla if they are inside any function type', async () => {
     const exports = require('./tla/await-inside-function.js');
     assert(!(exports instanceof Promise))
