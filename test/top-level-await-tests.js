@@ -3,7 +3,7 @@ const assert = require('assert');
 const reify = require('../lib/runtime/index');
 import { importSync, importAsync, importAsyncEvaluated } from './tla/nested/parent.js';
 
-(topLevelAwaitEnabled ? describe.only : describe.skip) ('top level await', () => {
+(topLevelAwaitEnabled ? describe : describe.skip) ('top level await', () => {
   
   describe('evaluation order', () => {
     let logs = [];
