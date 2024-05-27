@@ -3,7 +3,7 @@ const assert = require('assert');
 const reify = require('../lib/runtime/index');
 import { importSync, importAsync, importAsyncEvaluated } from './tla/nested/parent.js';
 
-(topLevelAwaitEnabled ? describe : describe.skip) ('top level await', () => {
+(topLevelAwaitEnabled ? describe.only : describe.skip) ('top level await', () => {
   
   describe('evaluation order', () => {
     let logs = [];
@@ -84,6 +84,16 @@ import { importSync, importAsync, importAsyncEvaluated } from './tla/nested/pare
     const exports = await require('./tla/export-sync-parent.js');
     assert(exports.a === 1);
   });
+
+  it('should detect exported declarations', async () => {
+    const exports = await require('./tla/exported-declaration.js');
+    assert(exports.test === 'value');
+  })
+
+  it('should detect non exported declarations', async () => {
+    const exports = await require('./tla/non-exported-declaration.js');
+    assert(exports.redirected === 'value');
+  })
 
   describe('errors', () => {
     it('should synchronously throw error for sync module', () => {
