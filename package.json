@@ -1,6 +1,6 @@
 {
   "name": "@meteorjs/reify",
-  "version": "0.25.2",
+  "version": "0.25.3",
   "main": "node/index.js",
   "browser": "lib/empty.js",
   "author": "Ben Newman <ben@benjamn.com>",
