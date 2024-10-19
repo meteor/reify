@@ -10,8 +10,9 @@ TEST_DIR=$(pwd)
 export NODE_PENDING_DEPRECATION=1
 export NODE_OPTIONS="--trace-warnings"
 
-cd "$TEST_DIR"
+MOCHA_GREP=${MOCHA_GREP:-""}
 
+cd "$TEST_DIR"
 parsers=("babel" "acorn")
 tlaModes=('false' 'true')
 
@@ -25,6 +26,7 @@ for parser in ${parsers[@]}; do
             --require "../node" \
             --reporter spec \
             --full-trace \
+            --grep "$MOCHA_GREP" \
             run.js
     done
 done
@@ -34,4 +36,5 @@ mocha \
     --require "../node" \
     --reporter spec \
     --full-trace \
+    --grep "$MOCHA_GREP" \
     run.js
