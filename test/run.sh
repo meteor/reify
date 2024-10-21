@@ -22,7 +22,7 @@ for parser in ${parsers[@]}; do
         export REIFY_PARSER="$parser"
         export REIFY_TLA="$tla"
 
-        mocha \
+        npx mocha \
             --require "../node" \
             --reporter spec \
             --full-trace \
@@ -32,7 +32,7 @@ for parser in ${parsers[@]}; do
 done
 
 # Run tests again using test/.cache.
-mocha \
+npx mocha \
     --require "../node" \
     --reporter spec \
     --full-trace \
