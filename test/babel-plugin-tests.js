@@ -109,6 +109,7 @@ describe("reify/plugins/babel", () => {
 
   (topLevelAwaitEnabled ? describe : describe.skip)("top level await via babel plugin", ()=>{
     it('doesn’t detect TLA for simple content', () => {
+      // Depends on the special __reifyWaitForDeps__ detection in visitAwaitExpression
       const code = `
 import { Meteor } from "meteor/meteor";
 export const isServer = Meteor.isServer;
