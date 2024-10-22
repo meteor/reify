@@ -125,6 +125,24 @@ export const isServer = Meteor.isServer;
         /async: false\n/
       );
     });
+
+    it('detects TLA for simple content', () => {
+      const code = `
+import { Meteor } from "meteor/meteor";
+export const isServer = await Meteor.isServer;
+`;
+      const ast = parse(code);
+      delete ast.tokens;
+      const result = transformFromAst(ast, code, {
+        plugins: [[reifyPlugin, {
+          dynamicImport: true
+        }]]
+      });
+      assert.match(
+        result.code,
+        /async: true\n/
+      );
+    });    
   });
 
   function check(code, options) {
