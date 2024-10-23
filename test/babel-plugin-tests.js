@@ -106,6 +106,46 @@ describe("reify/plugins/babel", () => {
     );
   });
 
+
+  (topLevelAwaitEnabled ? describe : describe.skip)("top level await via babel plugin", ()=>{
+    it('doesn’t detect TLA for simple content', () => {
+      // Depends on the special __reifyWaitForDeps__ detection in visitAwaitExpression
+      const code = `
+import { Meteor } from "meteor/meteor";
+export const isServer = Meteor.isServer;
+`;
+      const ast = parse(code);
+      delete ast.tokens;
+      const result = transformFromAst(ast, code, {
+        plugins: [[reifyPlugin, {
+          dynamicImport: true
+        }]]
+      });
+      assert.match(
+        result.code,
+        /async: false\n/
+      );
+    });
+
+    it('detects TLA for simple content', () => {
+      const code = `
+import { Meteor } from "meteor/meteor";
+export const isServer = await Meteor.isServer;
+`;
+      const ast = parse(code);
+      delete ast.tokens;
+      const result = transformFromAst(ast, code, {
+        plugins: [[reifyPlugin, {
+          dynamicImport: true
+        }]]
+      });
+      assert.match(
+        result.code,
+        /async: true\n/
+      );
+    });    
+  });
+
   function check(code, options) {
     const ast = parse(code);
     delete ast.tokens;
